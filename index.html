@@ -3,103 +3,485 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#16051f">
 <title>Para Abi ❤️</title>
+
 <style>
-body {
-  margin: 0;
-  padding: 20px;
-  font-family: Arial, sans-serif;
-  text-align: center;
-  color: #a01653;
-  background: linear-gradient(135deg, #ffe0ec, #ff9fc8);
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:linear-gradient(160deg,#10051c,#351047,#12051c);
+  color:white;font-family:Georgia,serif;text-align:center;
+  min-height:100vh;overflow-x:hidden
 }
-.card {
-  max-width: 500px;
-  margin: 25px auto;
-  padding: 25px;
-  background: #ffffffdd;
-  border-radius: 25px;
-  box-shadow: 0 5px 20px #c54b8033;
+main{
+  width:min(92%,520px);margin:auto;padding:28px 0 45px;
+  position:relative;z-index:2
 }
-h1 { color: #e52c78; }
-button {
-  padding: 14px 22px;
-  border: 0;
-  border-radius: 25px;
-  background: #e52c78;
-  color: white;
-  font-size: 16px;
+h1{color:#ffc5ed;text-shadow:0 0 20px #e95dc9;font-size:clamp(32px,8vw,44px)}
+h2{color:#f7c4f0}
+p{line-height:1.8}
+.card{
+  margin:20px 0;padding:22px 17px;border-radius:20px;
+  background:#ffffff0c;border:1px solid #f4b4ed55;
+  box-shadow:0 0 25px #b845e51a;backdrop-filter:blur(6px)
 }
-#sorpresa { display: none; line-height: 1.7; }
+button{
+  background:linear-gradient(135deg,#a92e91,#622b9c);
+  color:white;border:1px solid #f8c9ee;border-radius:30px;
+  padding:13px 20px;font:16px Georgia,serif;
+  margin:8px 3px;cursor:pointer
+}
+button:active{transform:scale(.97)}
+.small{font-size:13px;color:#d9b8e8}
+.letter{text-align:left;color:#fff0fb;animation:appear 1s}
+.letter p{white-space:pre-wrap;overflow-wrap:anywhere}
+@keyframes appear{
+  from{opacity:0;transform:translateY(12px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.heart{
+  display:inline-block;font-size:85px;cursor:pointer;
+  filter:drop-shadow(0 0 15px #ff55b8);animation:beat 1s infinite
+}
+@keyframes beat{
+  0%,100%{transform:scale(1)}
+  15%{transform:scale(1.15)}
+  30%{transform:scale(1)}
+}
+.timer{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:6px;margin-top:20px
+}
+.timebox{
+  background:#ffffff10;border:1px solid #f1a9ed55;
+  border-radius:12px;padding:12px 2px
+}
+.timebox strong{
+  display:block;color:#ffc5ed;font-size:clamp(19px,5vw,26px)
+}
+.timebox span{font-size:10px}
+#subtitle{
+  min-height:110px;display:grid;place-items:center;
+  font-size:19px;color:#ffe0f6;text-shadow:0 0 12px #ff70db;
+  padding:15px 5px;line-height:1.7;
+  transition:opacity .25s
+}
+#subtitle.changing{animation:appear .35s}
+.gallery{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.photo{
+  min-height:105px;border:1px dashed #f4b4ed99;border-radius:13px;
+  display:grid;place-items:center;padding:8px;color:#f4c6eb;
+  background:#ffffff08;overflow:hidden
+}
+.photo img{width:100%;height:145px;object-fit:cover;border-radius:9px}
+#gift{font-size:75px;cursor:pointer;display:inline-block;transition:transform .3s}
+#gift:hover{transform:scale(1.1)}
+#giftMessage{font-size:19px;color:#ffd4f2}
+#final{animation:appear 1.5s}
+.hidden{display:none!important}
+.star{
+  position:fixed;pointer-events:none;color:white;
+  animation:twinkle 3s infinite
+}
+@keyframes twinkle{
+  50%{opacity:.15;transform:scale(.7)}
+}
+.particle{
+  position:fixed;top:-30px;z-index:1;pointer-events:none;
+  animation:fall linear forwards
+}
+@keyframes fall{
+  to{transform:translateY(110vh) rotate(360deg);opacity:0}
+}
+footer{font-size:12px;color:#d9b8e8;margin-top:30px}
 </style>
 </head>
+
 <body>
+<main>
+  <div style="font-size:28px">💜 ✦ 💗 ✦ 💜</div>
+  <h1>Para Abi ❤️</h1>
+  <p>Preparé un pequeño mundo para vos, lleno de amor y sorpresas.</p>
 
-<h1>❤️ Para mi Abi ❤️</h1>
-<p>Una sorpresa hecha especialmente para vos.</p>
+  <section class="card">
+    <h2>💌 Una carta para vos</h2>
+    <div class="letter" id="letter">
+      <div id="letterText"></div>
+    </div>
+  </section>
 
-<div class="card">
-  <h2>💌 Mi carta para vos</h2>
-  <p>
-    Abi, desde que llegaste a mi vida,
-    te convertiste en alguien muy especial.
-    Quiero compartir con vos momentos hermosos,
-    risas, abrazos y recuerdos inolvidables.
-    Gracias por ser parte de mi vida.
-  </p>
-  <h2>Te amo, Abi ❤️</h2>
-  <p>Hoy y todos los días, te sigo eligiendo.</p>
-</div>
+  <section class="card">
+    <h2>💗 Un corazón para vos</h2>
+    <p>Tocalo y descubrí un mensajito.</p>
+    <div class="heart" onclick="heartMessage()">♥</div>
+    <p id="heartText">Hay algo lindo esperándote...</p>
+  </section>
 
-<div class="card">
-  <h2>⏳ Nuestro tiempo juntos</h2>
-  <p>Desde el 2 de septiembre de 2026</p>
-  <h2 id="contador"></h2>
-</div>
+  <section class="card">
+    <h2>📸 Nuestros recuerdos</h2>
+    <p>Elegí fotos desde tu celular para verlas acá.</p>
+    <div class="gallery">
+      <div class="photo" id="frame1">Nuestra foto 1</div>
+      <div class="photo" id="frame2">Nuestra foto 2</div>
+      <div class="photo" id="frame3">Nuestra foto 3</div>
+      <div class="photo" id="frame4">Nuestra foto 4</div>
+    </div>
+    <p class="small">Las fotos elegidas se muestran mientras esta página está abierta. Para que Abi también las vea, habrá que subirlas al sitio.</p>
+    <input type="file" accept="image/*" multiple onchange="loadPhotos(event)">
+  </section>
 
-<div class="card">
-  <h2>🎁 Una sorpresa para vos</h2>
-  <p>Preparé esto con todo mi amor.</p>
-  <button onclick="abrirSorpresa()">
-    Abrí tu sorpresa ❤️
-  </button>
-  <p id="sorpresa">
-    Abi, si pudiera volver a empezar,
-    volvería a querer encontrarte.
-    Sos muy importante para mí y quiero
-    seguir creando recuerdos con vos.
-    <br><br>
-    Te amo muchísimo, mi Abi. ❤️
-  </p>
-</div>
+  <section class="card">
+    <h2>🌌 Nuestro pequeño universo</h2>
+    <p>En medio de tantas estrellas, hay personas que hacen que todo brille un poquito más.</p>
+    <div style="font-size:24px;color:#ffc5ed">✦ A B I ✦</div>
+    <p>Que nunca te falten motivos para sonreír. 💜</p>
+  </section>
 
-<div class="card">
-  <h2>🎵 Nuestra canción</h2>
-  <p>Lifetime — Chris Grey</p>
-  <p>Esta parte queda preparada para agregar la música.</p>
-</div>
+  <section class="card">
+    <h2>🎁 Un regalo secreto</h2>
+    <p>Hay una sorpresa escondida. Tocá la cajita.</p>
+    <div id="gift" onclick="openGift()">🎁</div>
+    <div id="giftMessage" class="hidden">
+      <p>✨ ¡Sorpresa, Abi! ✨</p>
+      <p>Si pudiera regalarte algo más que esta página, sería un montón de momentos felices para compartir y muchos motivos para sonreír.</p>
+      <p>Te amo muchísimo. ❤️</p>
+    </div>
+  </section>
 
-<p>Hecho con amor para Abi 💗</p>
+  <section class="card">
+    <h2>🎵 Una vida entera ❤️</h2>
+    <p>Una canción para acompañar esta sorpresa.</p>
+
+    <audio id="music" controls preload="metadata" style="width:100%">
+      <source src="lifetime.mp3" type="audio/mpeg">
+      Tu navegador no puede reproducir este audio.
+    </audio>
+
+    <div id="subtitle">
+      ✨ Dale play y disfrutá este momento ✨
+    </div>
+
+    <p class="small">
+      Cada frase aparece mientras avanza la canción.
+      Podés pausar la música y volver a escucharla cuando quieras. 💗
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>⏳ Cada segundo cuenta</h2>
+    <p>Un contador desde nuestra fecha especial. ❤️</p>
+    <div class="timer">
+      <div class="timebox"><strong id="days">0</strong><span>DÍAS</span></div>
+      <div class="timebox"><strong id="hours">00</strong><span>HORAS</span></div>
+      <div class="timebox"><strong id="minutes">00</strong><span>MINUTOS</span></div>
+      <div class="timebox"><strong id="seconds">00</strong><span>SEGUNDOS</span></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>💜 La última sorpresa</h2>
+    <p>Cuando estés lista, tocá el botón...</p>
+    <button onclick="showFinal()">Abrir mi último mensaje ❤️</button>
+    <div id="final" class="hidden">
+      <h1 style="font-size:32px">Abi ❤️</h1>
+      <p>Entre tantas personas, me alegra que nuestros caminos se hayan cruzado.</p>
+      <p>No sé qué nos depara el futuro, pero quiero valorar cada momento lindo que podamos compartir.</p>
+      <p>Esta página es un pequeño detalle para recordarte algo muy grande para mí:</p>
+      <h2>Te amo muchísimo. 💗</h2>
+      <div style="font-size:32px">💗 💜 ❤️ 💜 💗</div>
+    </div>
+  </section>
+
+  <footer>Hecho con amor, especialmente para Abi ❤️</footer>
+</main>
 
 <script>
-function actualizarContador() {
-  const inicio = new Date(2026, 8, 2);
-  const ahora = new Date();
-  const dias = Math.floor((ahora - inicio) / 86400000);
+// CARTA PARA ABI
+const letterContent = [
+  "Perdón, mi Abi ❤️‍🩹",
+  "Antes de decirte cualquier otra cosa, quiero pedirte perdón de corazón. Perdón si te hice sentir mal, si te lastimé con mis palabras o mis acciones, o si en algún momento no supe demostrarte todo lo que significás para mí.",
+  "No quiero que pienses que tus sentimientos no me importan, porque me importás muchísimo. Sé que a veces uno se equivoca, pero quiero aprender de mis errores y demostrarte con hechos que quiero hacer las cosas bien.",
+  "No te escribo esto esperando que todo se solucione mágicamente, sino porque merecés saber que lo siento de verdad. Sos alguien muy especial para mí y no quiero que el orgullo sea más grande que lo que siento por vos.",
+  "Perdón, mi vida. Te amo muchísimo, más de lo que a veces puedo explicar con palabras. ❤️",
+  "Y ahora sí, quiero que sigas leyendo, porque preparé todo esto para vos, con muchísimo amor. Cada detalle de esta página tiene un poquito de lo que siento por vos. Quiero que cuando la veas, recuerdes lo importante que sos para mí y lo feliz que me hace tenerte en mi vida.",
+  "Sos mi persona especial, Abi. Y si hay algo que quiero que nunca dudes, es que te amo muchísimo. ❤️🥹",
+  "Esto es para vos, mi amor. Hoy, mañana y cada día que me permitas seguir compartiendo momentos con vos. 💗",
+  "Mi Abi hermosa: ❤️",
+  "Quería regalarte algo diferente, algo que puedas guardar como un pequeño recuerdo de lo que siento por vos.",
+  "A veces cuesta encontrar las palabras justas para explicar lo que alguien significa en nuestra vida. Pero quiero que sepas que sos muy especial para mí.",
+  "Me gusta imaginar todos los momentos lindos que todavía nos quedan por compartir: las risas, las charlas, los abrazos y esas pequeñas cosas que terminan significando tanto.",
+  "No hace falta que todo sea perfecto. Para mí, lo importante es que lo que compartamos sea sincero, que podamos acompañarnos y disfrutar cada momento.",
+  "Ojalá esta página te saque una sonrisa y te recuerde que alguien se tomó el tiempo de crearla pensando en vos.",
+  "Te amo, Abi. ❤️",
+  "Con todo mi amor 💜"
+];
 
-  document.getElementById("contador").textContent =
-    dias >= 0 ? dias + " días juntos ❤️" :
-    "Nuestra historia comienza pronto ❤️";
+const letterText = document.getElementById("letterText");
+let paragraphIndex = 0;
+let letterIndex = 0;
+
+function typeLetter(){
+  if(paragraphIndex >= letterContent.length) return;
+
+  const paragraph = letterContent[paragraphIndex];
+
+  if(letterIndex === 0){
+    const p = document.createElement("p");
+    letterText.appendChild(p);
+
+    if(paragraph === "Perdón, mi Abi ❤️‍🩹"){
+      p.style.textAlign = "center";
+      p.style.fontSize = "25px";
+      p.style.color = "#ffc5ed";
+      p.style.fontWeight = "bold";
+    }
+
+    if(paragraph.startsWith("Perdón, mi vida.")){
+      p.style.textAlign = "center";
+      p.style.fontSize = "21px";
+      p.style.color = "#ffc5ed";
+    }
+
+    if(paragraph.startsWith("Sos mi persona especial")){
+      p.style.textAlign = "center";
+      p.style.color = "#ffc5ed";
+    }
+
+    if(paragraph === "Mi Abi hermosa: ❤️"){
+      p.style.textAlign = "center";
+      p.style.fontSize = "23px";
+      p.style.color = "#ffc5ed";
+      p.style.fontWeight = "bold";
+    }
+
+    if(paragraph === "Te amo, Abi. ❤️"){
+      p.style.textAlign = "center";
+      p.style.fontSize = "23px";
+      p.style.color = "#ffc5ed";
+    }
+
+    if(paragraph === "Con todo mi amor 💜"){
+      p.style.textAlign = "right";
+    }
+  }
+
+  const current = letterText.lastElementChild;
+  current.textContent += paragraph.charAt(letterIndex);
+  letterIndex++;
+
+  if(letterIndex >= paragraph.length){
+    paragraphIndex++;
+    letterIndex = 0;
+    setTimeout(typeLetter,650);
+  }else{
+    setTimeout(typeLetter,45);
+  }
 }
 
-function abrirSorpresa() {
-  document.getElementById("sorpresa").style.display = "block";
+typeLetter();
+
+// CORAZÓN CON MENSAJES
+const messages=[
+  "Sos una persona muy especial para mí. ❤️",
+  "Ojalá hoy tengas mil motivos para sonreír. 💗",
+  "Esta página la hice pensando en vos. 💜",
+  "Te amo más de lo que puedo explicar con palabras. ✨"
+];
+
+let heartIndex=-1;
+
+function heartMessage(){
+  heartIndex=(heartIndex+1)%messages.length;
+  document.getElementById("heartText").textContent=messages[heartIndex];
 }
 
-actualizarContador();
-setInterval(actualizarContador, 60000);
+function openGift(){
+  document.getElementById("giftMessage").classList.remove("hidden");
+  document.getElementById("gift").textContent="💝";
+}
+
+function showFinal(){
+  document.getElementById("final").classList.remove("hidden");
+  for(let i=0;i<25;i++) createParticle();
+}
+
+// CONTADOR DESDE EL 2 DE SEPTIEMBRE DE 2026 A LAS 00:00
+const fechaEspecial = new Date("2026-09-02T00:00:00-03:00").getTime();
+
+function updateTimer(){
+  const now=Date.now();
+  const el=id=>document.getElementById(id);
+
+  if(now<fechaEspecial){
+    el("days").textContent="0";
+    el("hours").textContent="00";
+    el("minutes").textContent="00";
+    el("seconds").textContent="00";
+    return;
+  }
+
+  let total=Math.floor((now-fechaEspecial)/1000);
+  const days=Math.floor(total/86400);
+  total%=86400;
+  const hours=Math.floor(total/3600);
+  total%=3600;
+  const minutes=Math.floor(total/60);
+  const seconds=total%60;
+
+  el("days").textContent=days;
+  el("hours").textContent=String(hours).padStart(2,"0");
+  el("minutes").textContent=String(minutes).padStart(2,"0");
+  el("seconds").textContent=String(seconds).padStart(2,"0");
+}
+
+updateTimer();
+setInterval(updateTimer,1000);
+
+// FOTOS ELEGIDAS DESDE EL CELULAR
+function loadPhotos(event){
+  const files=Array.from(event.target.files||[]).slice(0,4);
+
+  files.forEach((file,i)=>{
+    if(!file.type.startsWith("image/")) return;
+
+    const reader=new FileReader();
+
+    reader.onload=e=>{
+      const frame=document.getElementById("frame"+(i+1));
+      frame.innerHTML="";
+      const img=document.createElement("img");
+      img.src=e.target.result;
+      img.alt="Recuerdo";
+      frame.appendChild(img);
+    };
+
+    reader.readAsDataURL(file);
+  });
+}
+
+// LETRA EN ESPAÑOL SIN TEXTO EN INGLÉS
+// Los tiempos son aproximados: ajustalos si no coinciden
+// exactamente con tu versión del archivo lifetime.mp3.
+const phrases=[
+  {t:0,text:"💗 UNA VIDA ENTERA 💗"},
+  {t:5,text:"Imprudente, no sabes lo que me has hecho"},
+  {t:10,text:"Cada segundo que estamos separados, estoy en la miseria"},
+  {t:16,text:"Cariño, corro cuando me llamas"},
+  {t:20,text:"Lo daría todo"},
+  {t:23,text:"Si tú quisieras"},
+  {t:26,text:"No romperé una promesa"},
+  {t:29,text:"Salta si caes"},
+  {t:33,text:"No podría detenerme"},
+
+  {t:39,text:"Oh, cariño, podría amarte hasta el día en que muera"},
+  {t:45,text:"Hasta que el océano empiece a secarse"},
+  {t:50,text:"Usaría mi último aliento solo para llamarte mía"},
+  {t:56,text:"Podría amarte por una vida entera ❤️"},
+  {t:61,text:"Mi mano en tu mano hasta el día en que muramos"},
+  {t:67,text:"Hasta que las estrellas caigan del cielo"},
+  {t:72,text:"Sosteniéndote cerca hasta que mi corazón se detenga"},
+  {t:78,text:"Podría amarte por una vida entera 💗"},
+
+  {t:84,text:"Sé que nadie más es suficiente para mí"},
+  {t:90,text:"Cariño, sé que estaremos ardiendo eternamente"},
+  {t:96,text:"Porque cuando todo se derrumba"},
+  {t:100,text:"Y el tiempo se acaba"},
+  {t:104,text:"Escalaremos todas las montañas"},
+  {t:109,text:"Pasaría mil"},
+  {t:112,text:"Noches en el frío"},
+  {t:117,text:"Estaremos aquí aferrándonos"},
+
+  {t:123,text:"Oh, cariño, podría amarte hasta el día en que muera"},
+  {t:129,text:"Hasta que el océano empiece a secarse"},
+  {t:134,text:"Usaría mi último aliento solo para llamarte mía"},
+  {t:140,text:"Podría amarte por una vida entera ❤️"},
+  {t:145,text:"Mi mano en tu mano hasta el día en que muramos"},
+  {t:150,text:"Hasta que las estrellas caigan del cielo"},
+  {t:155,text:"Sosteniéndote cerca hasta que mi corazón se detenga"},
+  {t:161,text:"Podría amarte por una vida entera 💗"},
+
+  {t:168,text:"Una vida entera, sí ❤️"},
+  {t:173,text:"Una vida entera 💜"},
+  {t:178,text:"Gracias por escucharla conmigo, Abi. Te amo ❤️"}
+];
+
+const music=document.getElementById("music");
+const subtitle=document.getElementById("subtitle");
+
+function updateSubtitle(){
+  const time=music.currentTime;
+  let current=null;
+
+  for(const phrase of phrases){
+    if(time>=phrase.t){
+      current=phrase;
+    }else{
+      break;
+    }
+  }
+
+  if(current && subtitle.dataset.current!==String(current.t)){
+    subtitle.dataset.current=String(current.t);
+    subtitle.classList.remove("changing");
+
+    // Reinicia la animación de cada frase.
+    void subtitle.offsetWidth;
+
+    subtitle.textContent=current.text;
+    subtitle.classList.add("changing");
+  }
+
+  if(time<0.5 && music.paused){
+    subtitle.textContent="✨ Dale play y disfrutá este momento ✨";
+    delete subtitle.dataset.current;
+  }
+}
+
+music.addEventListener("timeupdate",updateSubtitle);
+
+music.addEventListener("seeked",updateSubtitle);
+
+music.addEventListener("ended",()=>{
+  subtitle.textContent="❤️ La canción termina, pero todavía quedan muchos recuerdos por crear.";
+  subtitle.classList.add("changing");
+  delete subtitle.dataset.current;
+});
+
+// ESTRELLAS DE FONDO
+for(let i=0;i<45;i++){
+  const star=document.createElement("div");
+  star.className="star";
+  star.textContent="✦";
+  star.style.left=Math.random()*100+"vw";
+  star.style.top=Math.random()*100+"vh";
+  star.style.fontSize=(8+Math.random()*13)+"px";
+  star.style.animationDelay=Math.random()*3+"s";
+  document.body.appendChild(star);
+}
+
+// CORAZONES Y CUADRADITOS FLOTANTES
+function createParticle(){
+  const p=document.createElement("div");
+  p.className="particle";
+  p.textContent=Math.random()>.5?"♥":"▪";
+
+  p.style.left=Math.random()*100+"vw";
+  p.style.fontSize=(12+Math.random()*18)+"px";
+
+  p.style.color=["#ffc5ed","#d9a4ff","#ffffff","#f28bdb"][
+    Math.floor(Math.random()*4)
+  ];
+
+  const duration=5+Math.random()*6;
+  p.style.animationDuration=duration+"s";
+
+  document.body.appendChild(p);
+  setTimeout(()=>p.remove(),duration*1000);
+}
+
+setInterval(createParticle,550);
 </script>
-
 </body>
 </html>
